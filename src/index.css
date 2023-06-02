@@ -33,11 +33,10 @@ code {
 
 .button {
   display: block;
-  background-color: #c0c0c0;
-  text-transform: uppercase;
-  font-weight: bold;
-  width: 150px;
-  height: 40px;
-  border: none;
-  margin: 10px auto;
+  margin: 20px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
 }

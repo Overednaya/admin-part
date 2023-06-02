@@ -1,11 +1,11 @@
 import './App.css';
-import UsersList from './UsersList';
+import UsersContainer from './UsersContainer';
 
 
 function App() {
   return (
     <div className="App">
-      <UsersList />
+      <UsersContainer />
     </div>
   );
 }
