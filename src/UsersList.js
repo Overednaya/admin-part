@@ -3,12 +3,15 @@ import { Select, MenuItem } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton } from '@mui/material';
 import InputBase from '@mui/material/InputBase';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import SavedUsersList from './SavedUsersList';
 
 function UsersList({ handleUsersAmount }) {
   const [users, setUsers] = useState([]);
   const [sortedUsers, setSortedUsers] = useState([]);
   const [sortOption, setSortOption] = useState('');
   const [nameFilter, setNameFilter] = useState('');
+  const [savedUsers, setSavedUsers] = useState([]);
 
   useEffect(() => {
     fetchUsers();
@@ -39,6 +42,15 @@ function UsersList({ handleUsersAmount }) {
     handleUsersAmount(updatedUsers.length);
   };
 
+  const handleSave = (user) => {
+    if (savedUsers.includes(user)) {
+        return [...savedUsers]
+    }
+    setSavedUsers([...savedUsers, user]);
+    console.log(savedUsers)
+  }
+
+
   const handleSortBy = (option) => {
     setSortOption(option);
     let sorted;
@@ -68,6 +80,7 @@ function UsersList({ handleUsersAmount }) {
       user.name.toLowerCase().includes(value.toLowerCase())
     );
     setSortedUsers(filteredUsers);
+    handleUsersAmount(filteredUsers.length)
   };
 
   return (
@@ -87,8 +100,9 @@ function UsersList({ handleUsersAmount }) {
           value={nameFilter}
           onChange={handleFilterByName}
           placeholder='Filter by name'
-        />{' '}
+        />
       </div>
+      <div><SavedUsersList savedUsers={savedUsers}/></div>
       <ul className='users-list'>
         {sortedUsers.length > 0 ? (
           sortedUsers.map((user) => (
@@ -108,6 +122,10 @@ function UsersList({ handleUsersAmount }) {
                 onClick={() => handleDelete(user)}
               >
                 <DeleteIcon />
+              </IconButton>
+              <IconButton aria-label='save'
+              onClick={() => handleSave(user)}>
+                <BookmarkIcon />
               </IconButton>
             </li>
           ))
